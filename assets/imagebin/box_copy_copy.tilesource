@@ -1,0 +1,10 @@
+image: "/builtins/assets/images/logo/logo_256.png"
+tile_width: 10
+tile_height: 10
+collision_groups: "default"
+animations {
+  id: "yellow"
+  start_tile: 317
+  end_tile: 317
+}
+extrude_borders: 2
