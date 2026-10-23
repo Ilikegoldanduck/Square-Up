@@ -1,0 +1,15 @@
+image: "/builtins/graphics/particle_blob.png"
+tile_width: 1
+tile_height: 1
+collision_groups: "default"
+animations {
+  id: "grey"
+  start_tile: 404
+  end_tile: 404
+}
+animations {
+  id: "white"
+  start_tile: 496
+  end_tile: 496
+}
+extrude_borders: 2

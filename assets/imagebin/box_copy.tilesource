@@ -1,0 +1,15 @@
+image: "/assets/imagebin/garden-ground-pixilart (1).png"
+tile_width: 10
+tile_height: 10
+collision_groups: "default"
+animations {
+  id: "brown"
+  start_tile: 54
+  end_tile: 54
+}
+animations {
+  id: "green"
+  start_tile: 1
+  end_tile: 1
+}
+extrude_borders: 2
