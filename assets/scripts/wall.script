@@ -11,8 +11,12 @@ function init(self)
 	pprint(avg)
 	pprint(size)
 	go.set_position(avg)
+	if size.x > size.y then
+		physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = vmath.vector3(size.x / size.y, 1, 10)})
+	else
+		physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = vmath.vector3(1, size.y / size.x, 10)})
+	end
 	go.set_scale(size)
-	--physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = size})
 	if self.property == "static" then
 
 	else

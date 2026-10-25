@@ -7,7 +7,7 @@ local released = false
 multi = 0
 local mousepos = vmath.vector3()
 
-local level = 3
+local level = 4
 
 local levels = {
 	{
@@ -23,6 +23,12 @@ local levels = {
 		goal = vmath.vector3(200, 0, 0),
 		wall = {
 			{vmath.vector3(100, 100, 0), vmath.vector3(-100, 160, 0), vmath.vector3(0, -130, 0), 5}
+		}
+	},
+	{
+		goal = vmath.vector3(200, 0, 0),
+		wall = {
+			{vmath.vector3(100, 100, 0), vmath.vector3(160, -100, 0), vmath.vector3(-130, 0, 0), 5}
 		}
 	}
 }
