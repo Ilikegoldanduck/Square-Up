@@ -1,5 +1,7 @@
 go.property("position1", vmath.vector3())
 go.property("position2", vmath.vector3())
+go.property("property", vmath.vector3())
+go.property("propertyLength", 0)
 
 function init(self)
 	pprint("hi")
@@ -10,5 +12,11 @@ function init(self)
 	pprint(size)
 	go.set_position(avg)
 	go.set_scale(size)
-	physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = size})
+	--physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = size})
+	if self.property == "static" then
+
+	else
+		go.animate(".", "position", go.PLAYBACK_LOOP_PINGPONG, self.property, go.EASING_LINEAR, self.propertyLength, 0)
+	end
+
 end
