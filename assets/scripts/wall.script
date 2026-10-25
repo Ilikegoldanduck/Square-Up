@@ -1,9 +1,14 @@
-go.property("positions", {})
+go.property("position1", vmath.vector3())
+go.property("position2", vmath.vector3())
 
 function init(self)
-	local pos = go.get("positions")
-	local avg = (pos[1] + pos[2]) / 2
-	local size = pos[1] - pos[2]
+	pprint("hi")
+	local pos = {self.position1, self.position2}
+	local avg = vmath.vector3((pos[1].x + pos[2].x) / 2, (pos[1].y + pos[2].y) / 2, 0)
+	local size = vmath.vector3(math.abs(pos[1].x - pos[2].x), math.abs(pos[1].y - pos[2].y), 1)
+	pprint(avg)
+	pprint(size)
 	go.set_position(avg)
-	go.set_scale(size.x, size.y, 1)
+	go.set_scale(size)
+	physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = size})
 end

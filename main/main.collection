@@ -173,7 +173,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"wallfactory\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/assets/goal.go\\\"\\n"
+  "  data: \"prototype: \\\"/assets/wall.go\\\"\\n"
   "\"\n"
   "}\n"
   ""

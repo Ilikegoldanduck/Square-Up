@@ -7,7 +7,7 @@ local released = false
 multi = 0
 local mousepos = vmath.vector3()
 
-local level = 1
+local level = 2
 
 local levels = {
 	{
@@ -38,7 +38,8 @@ function generateLevel()
 	local chosenLevel = levels[level]
 	table.insert(levelComponents, factory.create("/background#goalfactory", chosenLevel.goal, nil, nil, 1))
 	for i, v in ipairs(chosenLevel.wall or {}) do
-		table.insert(levelComponents, factory.create("/background#wallfactory", v[1], nil, {positions = v}, 1))
+		pprint(v)
+		table.insert(levelComponents, factory.create("/background#wallfactory", v[1], nil, {position1 = v[1], position2 = v[2]}, 1))
 	end
 	go.set("background#levelLabel", "text", tostring(level))
 end

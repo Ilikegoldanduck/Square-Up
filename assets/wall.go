@@ -2,6 +2,10 @@ components {
   id: "goal"
   component: "/assets/scripts/goal.script"
 }
+components {
+  id: "wall"
+  component: "/assets/scripts/wall.script"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -21,9 +25,9 @@ embedded_components {
   type: "collisionobject"
   data: "type: COLLISION_OBJECT_TYPE_STATIC\n"
   "mass: 0.0\n"
-  "friction: 0.1\n"
+  "friction: 1.0\n"
   "restitution: 0.5\n"
-  "group: \"goal\"\n"
+  "group: \"wall\"\n"
   "mask: \"player\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
@@ -34,10 +38,14 @@ embedded_components {
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
+  "    id: \"wall\"\n"
   "  }\n"
   "  data: 0.5\n"
   "  data: 0.5\n"
   "  data: 10.0\n"
   "}\n"
+  "event_collision: false\n"
+  "event_contact: false\n"
+  "event_trigger: false\n"
   ""
 }
