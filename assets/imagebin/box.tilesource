@@ -8,6 +8,11 @@ animations {
   end_tile: 404
 }
 animations {
+  id: "slightlygrey"
+  start_tile: 402
+  end_tile: 402
+}
+animations {
   id: "white"
   start_tile: 496
   end_tile: 496
