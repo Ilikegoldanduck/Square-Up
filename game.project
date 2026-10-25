@@ -15,7 +15,7 @@ input_method = HiddenInputField
 [physics]
 gravity_y = 0.0
 scale = 0.01
-debug = 1
+debug = 0
 
 [html5]
 scale_mode = no_scale

@@ -1,0 +1,25 @@
+go.property("position1", vmath.vector3())
+go.property("position2", vmath.vector3())
+go.property("property", vmath.vector3())
+go.property("propertyLength", 0)
+
+function init(self)
+	pprint("hi")
+	local pos = {self.position1, self.position2}
+	local avg = vmath.vector3((pos[1].x + pos[2].x) / 2, (pos[1].y + pos[2].y) / 2, 0)
+	local size = vmath.vector3(math.abs(pos[1].x - pos[2].x), math.abs(pos[1].y - pos[2].y), 1)
+	pprint(avg)
+	pprint(size)
+	go.set_position(avg)
+	if size.x > size.y then
+		physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = vmath.vector3(size.x / size.y, 1, 10)})
+	else
+		physics.set_shape("#collisionobject", "wall", {type = physics.SHAPE_TYPE_BOX, dimensions = vmath.vector3(1, size.y / size.x, 10)})
+	end
+	go.set_scale(size)
+	if self.property == "static" then
+
+	else
+		go.animate(".", "position", go.PLAYBACK_LOOP_PINGPONG, self.property, go.EASING_LINEAR, self.propertyLength, 0)
+	end
+end

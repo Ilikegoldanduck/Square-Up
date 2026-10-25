@@ -176,6 +176,12 @@ embedded_instances {
   "  data: \"prototype: \\\"/assets/wall.go\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"evilfactory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/assets/evil.go\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
     z: -1.0
@@ -209,7 +215,7 @@ embedded_instances {
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
   "  data: \"type: COLLISION_OBJECT_TYPE_DYNAMIC\\n"
-  "mass: 0.01\\n"
+  "mass: 1.0\\n"
   "friction: 0.0\\n"
   "restitution: 0.0\\n"
   "group: \\\"player\\\"\\n"

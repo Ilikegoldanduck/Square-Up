@@ -1,0 +1,55 @@
+components {
+  id: "goal"
+  component: "/assets/scripts/goal.script"
+}
+components {
+  id: "evil"
+  component: "/assets/scripts/evil.script"
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "default_animation: \"red\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/imagebin/box_copy_copy.tilesource\"\n"
+  "}\n"
+  ""
+  position {
+    z: 2.0
+  }
+  scale {
+    x: 0.1
+    y: 0.1
+  }
+}
+embedded_components {
+  id: "collisionobject"
+  type: "collisionobject"
+  data: "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
+  "mass: 0.0\n"
+  "friction: 1.0\n"
+  "restitution: 0.5\n"
+  "group: \"evil\"\n"
+  "mask: \"player\"\n"
+  "embedded_collision_shape {\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_BOX\n"
+  "    position {\n"
+  "    }\n"
+  "    rotation {\n"
+  "    }\n"
+  "    index: 0\n"
+  "    count: 3\n"
+  "    id: \"wall\"\n"
+  "  }\n"
+  "  data: 0.5\n"
+  "  data: 0.5\n"
+  "  data: 10.0\n"
+  "}\n"
+  "event_collision: false\n"
+  "event_contact: false\n"
+  "event_trigger: false\n"
+  ""
+}

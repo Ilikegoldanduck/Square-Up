@@ -4,7 +4,7 @@ local label
 local key = false
 
 local released = false
-multi = 0
+local multi = 0
 local mousepos = vmath.vector3()
 
 local level = 4
@@ -27,8 +27,8 @@ local levels = {
 	},
 	{
 		goal = vmath.vector3(200, 0, 0),
-		wall = {
-			{vmath.vector3(100, 100, 0), vmath.vector3(160, -100, 0), vmath.vector3(-130, 0, 0), 5}
+		evil = {
+			{vmath.vector3(-100, 100, 0), vmath.vector3(-160, -100, 0), vmath.vector3(130, 0, 0), 15}
 		}
 	}
 }
@@ -37,6 +37,7 @@ local levelComponents = {}
 
 function reset()
 	key = false
+	go.set("#collisionobject", "linear_velocity", vmath.vector3())
 	go.set_position(vmath.vector3())
 	for i, v in ipairs(levelComponents) do
 		if go.exists(v) then
@@ -44,6 +45,7 @@ function reset()
 		end
 	end
 	levelComponents = {}
+	multi = 0
 end
 
 function generateLevel()
@@ -52,6 +54,10 @@ function generateLevel()
 	for i, v in ipairs(chosenLevel.wall or {}) do
 		pprint(v)
 		table.insert(levelComponents, factory.create("/background#wallfactory", v[1], nil, {position1 = v[1], position2 = v[2], property = v[3] or nil, propertyLength = v[4] or 0}, 1))
+	end
+	for i, v in ipairs(chosenLevel.evil or {}) do
+		pprint(v)
+		table.insert(levelComponents, factory.create("/background#evilfactory", v[1], nil, {position1 = v[1], position2 = v[2], property = v[3] or nil, propertyLength = v[4] or 0}, 1))
 	end
 	go.set("background#levelLabel", "text", tostring(level))
 end
@@ -73,6 +79,8 @@ function update(self, dt)
 		velocity = vmath.vector3()
 	end]]
 	go.set("/background#Label", "text", "Power: " .. multi .. "|Level: " .. level)
+	
+	--pprint(go.get("#collisionobject", "linear_velocity"))
 end
 
 function late_update(self, dt)
@@ -93,12 +101,14 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("goal") then
 		key = true
+	elseif message.other_group == hash("evil") then
+		reset()
+		generateLevel()
 	elseif message.other_group == hash("exit") then
 		if key then
 			level = level + 1
 			reset()
 		else
-			level = level
 			reset()
 		end
 		generateLevel()
@@ -109,22 +119,30 @@ end
 function on_input(self, action_id, action)
 	
 	--Tbh either going to go with a mouse or a keyboard idk yet
+	local tempVelocity = go.get("#collisionobject", "linear_velocity")
 	mousepos = camera.screen_to_world(vmath.vector3(action.x, action.y, 0))
-	if action_id == hash("touch") and action.pressed and velocity == vmath.vector3() then
+	if action_id == hash("touch") and action.pressed and (math.abs(tempVelocity.x) < 5 and math.abs(tempVelocity.y) < 5) then
 		multi = 0
 		released = false
 		timer.delay(.1, true, function(self, handle)
-			multi = multi + 5
-			if released or multi >= 100 then
+			if released then
 				timer.cancel(handle)
+			elseif multi >= 100 then
+
+			else
+				multi = multi + 5
 			end
 		end)
-	elseif action_id == hash("touch") and action.released and multi > 0 and velocity == vmath.vector3() then
+	elseif action_id == hash("touch") and action.released and tempVelocity == vmath.vector3() then
 		released = true
 		local tempvector = mousepos - go.get_position()
 		local unit = tempvector / vmath.length(tempvector)
 		pprint(unit * multi)
-		msg.post("#collisionobject", "apply_force", {force = unit * multi, position = go.get_world_position()})
+		msg.post("#collisionobject", "apply_force", {force = unit * multi * 100, position = go.get_world_position()})
+		multi = 0
+	elseif not action_id == hash("touch") then
+		released = true
+		multi = 0
 	end
 end
 
