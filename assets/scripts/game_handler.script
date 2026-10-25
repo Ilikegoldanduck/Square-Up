@@ -11,7 +11,13 @@ local level = 1
 
 local levels = {
 	{
-		goal = vmath.vector3(100, 0, 0)
+		goal = vmath.vector3(100, 0, 0),
+	},
+	{
+		goal = vmath.vector3(200, 0, 0),
+		wall = {
+			{vmath.vector3(100, 160, 0), vmath.vector3(120, -160, 0)}
+		}
 	}
 }
 
@@ -28,16 +34,18 @@ function reset()
 	levelComponents = {}
 end
 
-function generateLevel(level)
+function generateLevel()
 	local chosenLevel = levels[level]
 	table.insert(levelComponents, factory.create("/background#goalfactory", chosenLevel.goal, nil, nil, 1))
-
+	for i, v in ipairs(chosenLevel.wall or {}) do
+		table.insert(levelComponents, factory.create("/background#wallfactory", v[1], nil, {positions = v}, 1))
+	end
 	go.set("background#levelLabel", "text", tostring(level))
 end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	generateLevel(level)
+	generateLevel()
 end
 
 function final(self)
@@ -80,9 +88,9 @@ function on_message(self, message_id, message, sender)
 			level = level
 			reset()
 		end
+		generateLevel()
 	end
-	
-	pprint(message)
+	--pprint(message)
 end
 
 function on_input(self, action_id, action)
@@ -93,8 +101,8 @@ function on_input(self, action_id, action)
 		multi = 0
 		released = false
 		timer.delay(.1, true, function(self, handle)
-			multi = multi + 10
-			if released or multi >= 100 then
+			multi = multi + 20
+			if released or multi >= 200 then
 				timer.cancel(handle)
 			end
 		end)

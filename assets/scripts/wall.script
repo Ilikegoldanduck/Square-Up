@@ -1,0 +1,9 @@
+go.property("positions", {})
+
+function init(self)
+	local pos = go.get("positions")
+	local avg = (pos[1] + pos[2]) / 2
+	local size = pos[1] - pos[2]
+	go.set_position(avg)
+	go.set_scale(size.x, size.y, 1)
+end
