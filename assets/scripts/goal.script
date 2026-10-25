@@ -33,7 +33,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	go.delete()
-	msg.post("/player#collisionobject", "goal")
+	msg.post("/player#game_handler", "goal")
 end
 
 function on_input(self, action_id, action)
