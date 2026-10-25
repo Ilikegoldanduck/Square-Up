@@ -1,5 +1,4 @@
 local velocity = vmath.vector3()
-local player
 local label
 
 local key = false
@@ -12,7 +11,6 @@ local level = 1
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	player = "."
 	
 end
 
@@ -45,14 +43,21 @@ function fixed_update(self, dt)
 	-- Remove this function if not needed
 end
 
+function reset()
+	key = false
+	go.set_position(vmath.vector3())
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("goal") then
 		key = true
 	elseif message.other_group == hash("exit") then
 		if key then
-			
+			level = level + 1
+			reset()
 		else
-
+			level = level
+			reset()
 		end
 	end
 	
@@ -74,7 +79,7 @@ function on_input(self, action_id, action)
 		end)
 	elseif action_id == hash("touch") and action.released and multi > 0 and velocity == vmath.vector3() then
 		released = true
-		local tempvector = mousepos - go.get_position(player)
+		local tempvector = mousepos - go.get_position()
 		local unit = tempvector / vmath.length(tempvector)
 		pprint(unit * multi)
 		msg.post("#collisionobject", "apply_force", {force = unit * multi, position = go.get_world_position()})
